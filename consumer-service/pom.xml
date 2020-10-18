@@ -11,5 +11,12 @@
 
 	<artifactId>consumer-service</artifactId>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.github.quick.spring.boot</groupId>
+			<artifactId>consumer-dao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 
 </project>
