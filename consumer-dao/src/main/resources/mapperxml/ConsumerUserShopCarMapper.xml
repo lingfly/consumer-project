@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.quick.spring.boot.consumer.dao.mapper.ConsumerUserShopCarMapper">
+  <resultMap id="BaseResultMap" type="com.github.quick.spring.boot.consumer.dao.entity.ConsumerUserShopCar">
+    <!--@mbg.generated-->
+    <!--@Table consumer_user_shop_car-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, product_id, shop_id, `size`
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update consumer_user_shop_car
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="product_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.productId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="shop_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.shopId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="`size` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.size,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update consumer_user_shop_car
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="product_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.productId != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.productId,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="shop_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.shopId != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.shopId,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`size` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.size != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.size,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into consumer_user_shop_car
+    (product_id, shop_id, `size`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.productId,jdbcType=BIGINT}, #{item.shopId,jdbcType=BIGINT}, #{item.size,jdbcType=INTEGER}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.github.quick.spring.boot.consumer.dao.entity.ConsumerUserShopCar" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into consumer_user_shop_car
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      product_id,
+      shop_id,
+      `size`,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      #{productId,jdbcType=BIGINT},
+      #{shopId,jdbcType=BIGINT},
+      #{size,jdbcType=INTEGER},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      product_id = #{productId,jdbcType=BIGINT},
+      shop_id = #{shopId,jdbcType=BIGINT},
+      `size` = #{size,jdbcType=INTEGER},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.github.quick.spring.boot.consumer.dao.entity.ConsumerUserShopCar" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into consumer_user_shop_car
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="size != null">
+        `size`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="size != null">
+        `size` = #{size,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

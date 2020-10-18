@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.quick.spring.boot.consumer.dao.mapper.ConsumerOrderMapper">
+  <resultMap id="BaseResultMap" type="com.github.quick.spring.boot.consumer.dao.entity.ConsumerOrder">
+    <!--@mbg.generated-->
+    <!--@Table consumer_order-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_sn" jdbcType="VARCHAR" property="orderSn" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, order_sn, user_id, price, `status`
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update consumer_order
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="order_sn = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.orderSn,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.userId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="price = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.price,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.status,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update consumer_order
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="order_sn = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.orderSn != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.orderSn,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.userId != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.userId,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="price = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.price != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.price,jdbcType=DECIMAL}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.status,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated-->
+    insert into consumer_order
+    (id, order_sn, user_id, price, `status`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.orderSn,jdbcType=VARCHAR}, #{item.userId,jdbcType=BIGINT}, 
+        #{item.price,jdbcType=DECIMAL}, #{item.status,jdbcType=TINYINT})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="com.github.quick.spring.boot.consumer.dao.entity.ConsumerOrder">
+    <!--@mbg.generated-->
+    insert into consumer_order
+    (id, order_sn, user_id, price, `status`)
+    values
+    (#{id,jdbcType=BIGINT}, #{orderSn,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{price,jdbcType=DECIMAL}, 
+      #{status,jdbcType=TINYINT})
+    on duplicate key update 
+    id = #{id,jdbcType=BIGINT}, 
+    order_sn = #{orderSn,jdbcType=VARCHAR}, 
+    user_id = #{userId,jdbcType=BIGINT}, 
+    price = #{price,jdbcType=DECIMAL}, 
+    `status` = #{status,jdbcType=TINYINT}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="com.github.quick.spring.boot.consumer.dao.entity.ConsumerOrder">
+    <!--@mbg.generated-->
+    insert into consumer_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderSn != null">
+        order_sn,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderSn != null">
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderSn != null">
+        order_sn = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

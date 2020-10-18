@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.quick.spring.boot.consumer.dao.mapper.ConsumerUserMapper">
+  <resultMap id="BaseResultMap" type="com.github.quick.spring.boot.consumer.dao.entity.ConsumerUser">
+    <!--@mbg.generated-->
+    <!--@Table consumer_user-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="has_shop" jdbcType="TINYINT" property="hasShop" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, nick_name, login_name, `password`, version, has_shop
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update consumer_user
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="nick_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.nickName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="login_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.loginName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.password,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="version = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.version,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="has_shop = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.hasShop,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update consumer_user
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="nick_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.nickName != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.nickName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="login_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.loginName != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.loginName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.password != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.password,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="version = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.version != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.version,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="has_shop = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.hasShop != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.hasShop,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into consumer_user
+    (nick_name, login_name, `password`, version, has_shop)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.nickName,jdbcType=VARCHAR}, #{item.loginName,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR}, 
+        #{item.version,jdbcType=BIGINT}, #{item.hasShop,jdbcType=TINYINT})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.github.quick.spring.boot.consumer.dao.entity.ConsumerUser" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into consumer_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      nick_name,
+      login_name,
+      `password`,
+      version,
+      has_shop,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      #{nickName,jdbcType=VARCHAR},
+      #{loginName,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR},
+      #{version,jdbcType=BIGINT},
+      #{hasShop,jdbcType=TINYINT},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      version = #{version,jdbcType=BIGINT},
+      has_shop = #{hasShop,jdbcType=TINYINT},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.github.quick.spring.boot.consumer.dao.entity.ConsumerUser" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into consumer_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="loginName != null">
+        login_name,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="hasShop != null">
+        has_shop,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null">
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="hasShop != null">
+        #{hasShop,jdbcType=TINYINT},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null">
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="hasShop != null">
+        has_shop = #{hasShop,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

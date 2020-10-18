@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.quick.spring.boot.consumer.dao.mapper.ConsumerUserAddressMapper">
+  <resultMap id="BaseResultMap" type="com.github.quick.spring.boot.consumer.dao.entity.ConsumerUserAddress">
+    <!--@mbg.generated-->
+    <!--@Table consumer_user_address-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="first_choice" jdbcType="TINYINT" property="firstChoice" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, address, user_id, first_choice, version
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update consumer_user_address
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.address,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.userId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="first_choice = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.firstChoice,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+      <trim prefix="version = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.version,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update consumer_user_address
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.address != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.address,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.userId != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.userId,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="first_choice = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.firstChoice != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.firstChoice,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="version = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.version != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.version,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into consumer_user_address
+    (address, user_id, first_choice, version)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.address,jdbcType=VARCHAR}, #{item.userId,jdbcType=BIGINT}, #{item.firstChoice,jdbcType=TINYINT}, 
+        #{item.version,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.github.quick.spring.boot.consumer.dao.entity.ConsumerUserAddress" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into consumer_user_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      address,
+      user_id,
+      first_choice,
+      version,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      #{address,jdbcType=VARCHAR},
+      #{userId,jdbcType=BIGINT},
+      #{firstChoice,jdbcType=TINYINT},
+      #{version,jdbcType=BIGINT},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      address = #{address,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      first_choice = #{firstChoice,jdbcType=TINYINT},
+      version = #{version,jdbcType=BIGINT},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.github.quick.spring.boot.consumer.dao.entity.ConsumerUserAddress" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into consumer_user_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="firstChoice != null">
+        first_choice,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="firstChoice != null">
+        #{firstChoice,jdbcType=TINYINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="firstChoice != null">
+        first_choice = #{firstChoice,jdbcType=TINYINT},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>
